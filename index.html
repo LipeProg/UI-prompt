@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Electron</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    #commandForm {
+      margin-bottom: 20px;
+    }
+    #output {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    #output p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Comandos</h1>
+
+  <form id="commandForm">
+    <label for="commandInput">Digite um comando:</label>
+    <input type="text" id="commandInput" name="commandInput" required>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <div id="output">
+    <!-- Aqui serão exibidos os resultados dos comandos -->
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
