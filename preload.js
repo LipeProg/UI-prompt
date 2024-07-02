@@ -1,7 +1,18 @@
+// Módulo 'contextBridge' é necessário para prevenir vulnerabilidades de segurança no Electron
 const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('electronAPI', {
-  sendCommand: (command) => ipcRenderer.send('execute-command', command),
-  onCommandResult: (callback) => ipcRenderer.on('command-result', callback),
+// Expondo métodos seguros para o processo de renderização através do contexto de ponte
+contextBridge.exposeInMainWorld('electron', {
+  // Método para enviar comandos para o processo principal
+  sendCommandToMain: (command) => {
+    ipcRenderer.send('execute-command', command);
+  },
+
+  // Método para receber resultados do processo principal
+  receiveCommandResult: (callback) => {
+    ipcRenderer.on('command-result', (event, result) => {
+      callback(result);
+    });
+  },
 });
 

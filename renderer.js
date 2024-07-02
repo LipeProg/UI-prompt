@@ -1,22 +1,30 @@
+
+
+// Acessando os métodos expostos pelo preload.js através do objeto 'window.electron'
+const { sendCommandToMain, receiveCommandResult } = window.electron;
+
+// Selecionando elementos do DOM
 const commandForm = document.getElementById('commandForm');
 const commandInput = document.getElementById('commandInput');
 const outputDiv = document.getElementById('output');
 
+// Event listener para enviar comando ao processar o formulário
 commandForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const command = commandInput.value.trim();
+  event.preventDefault(); // Previne o comportamento padrão do formulário (envio/reload)
 
-  // Limpar campo de entrada
+  const command = commandInput.value.trim(); // Obtém o comando digitado
+
+  // Limpa o campo de entrada
   commandInput.value = '';
 
-  // Exibir o comando digitado na saída
+  // Exibe o comando digitado na saída
   outputDiv.innerHTML += `<p><strong>Você digitou:</strong> ${command}</p>`;
 
-  // Enviar comando para o processo principal
-  window.electronAPI.sendCommand(command);
+  // Envia o comando para o processo principal
+  sendCommandToMain(command);
 });
 
-// Receber resposta do processo principal
-window.electronAPI.onCommandResult((event, result) => {
+// Recebe resposta do processo principal e atualiza a interface
+receiveCommandResult((result) => {
   outputDiv.innerHTML += `<p><strong>Resposta:</strong> ${result}</p>`;
 });
